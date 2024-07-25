@@ -1,0 +1,15 @@
+{{page-title "Signin"}}
+<div class = 'signInContainer'>
+<div class="formContainer">
+    <Form @arr={{@model}} @getObj={{this.getObj}} @buttonvalue='SignIn' @class = 'form'/>
+    <div class = 'spanDiv'>
+        <span>Don't Have an Account</span>
+        {{!-- <span onclick = "changetoSignUp">Sign Up</span> --}}
+        <LinkTo @route = 'instagram.signup' class = 'linkToText'>Sign Up</LinkTo>
+    </div>
+</div>
+    {{#if this.isshowPopUp}}
+    <PopUp @value = {{this.result}} @class = {{this.className}}/>
+    {{/if}}
+</div>
+{{outlet}}

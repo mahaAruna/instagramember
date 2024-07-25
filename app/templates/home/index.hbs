@@ -1,0 +1,39 @@
+{{page-title "Home"}}
+<div id='homeContainer'>
+    <div id='mainContainer'>
+        <div id="storyContainer"></div>
+        <div id="reelsContainer">
+            {{#if thi.newPost}}
+            <div class="postBox">
+                <p>
+                    <img>
+                    <span>UserName</span>
+                    <span>.3d</span>
+                    <i><i class="fa-solid fa-ellipsis" style="color: #ffffff;"></i></i>
+                </p>
+                <div class="postImageDiv">
+
+                </div>
+                <p>
+                <ul>
+                    <li><i class='fa-regular fa-heart menu-icon'></i></li>
+                    <li><i class="fa-regular fa-comment fa-flip-horizontal" style="color: #ffffff;"></i></li>
+                    <li></li>
+                </ul>
+                <i><i class="fa-regular fa-bookmark" style="color: #ffffff;"></i></i>
+                </p>
+                <p></p>
+                <p></p>
+                <div>
+                    <Input @type="text" placeholder="Add a Comment" />
+                    <i class="fa fa-smile-o" aria-hidden="true" style="color: white;"></i>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <div id="suggestionContainer">
+
+    </div>
+</div>
+{{outlet}}

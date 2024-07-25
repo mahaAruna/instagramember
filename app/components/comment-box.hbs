@@ -1,0 +1,15 @@
+<div style = "margin: 5px">
+    <div onclick = {{this.changePage}} class = 'comment cursor'>
+
+        <img src={{@src}} class = {{@classForImage}}>
+        <div>
+        <p><span style = "font-weight: 600;">{{@userName}}</span><span style = "padding-left: 10px">{{@commentText}}</span></p>
+        <p class = 'timeCommentBox'>{{@time}} <span onClick = {{@showLikeClick}} style = "word-spacing: 2px;">{{@likesCount}} like</span> <span onClick = {{@replyClick}}>Reply</span></p>
+        {{#if (this.like)}}
+        <i class="fa-solid fa-heart commentLike" style="color: #ff0000;" {{on 'click' this.removeLike}}></i>
+        {{else}}
+        <i class='fa-regular fa-heart commentLike'  {{on 'click' this.addLike}}></i>
+        {{/if}}
+        </div>
+    </div>
+</div>

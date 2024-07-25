@@ -1,0 +1,43 @@
+{{page-title "Edit"}}
+<div id='editContainer'>
+    <h1>Edit Profile</h1>
+    <div id='changableBox'>
+        <div id='changeprofile'>
+            {{#if this.imageDataUrl}}
+            <img src={{this.imageDataUrl}} alt="Profile Photo" id='changePhoto'>
+            {{else}}
+            <input type="file" enctype='multipart/form-data' {{on 'change' this.getFile}} id='changePhoto'>
+            {{/if}}
+            <span style="color: blue">
+                Change<input type="file" enctype='multipart/form-data' {{on 'change' this.getFile}} placeholder="image">
+            </span>
+
+        </div>
+        <div id='inputContainer'>
+            <div class='editInputBox'>
+                <label>Name</label>
+                <Input @type='text' class='editInput' @value={{this.name}} />
+            </div>
+            <div class='inputBox'>
+                <label>Username</label>
+                <Input @type='text' class='editInput' @value={{this.userName}} />
+            </div>
+            <div class='inputBox'>
+                <label>Bio</label>
+                <Input @type='text' class='editInput' @value={{this.bio}} />
+            </div>
+            <div class='inputBox'>
+                <label>Gender</label>
+                <select class='editInput' {{on 'change' this.updateGender}}>
+                    <option selected={{equals this.gender 'Female' }}>Female</option>
+                    <option selected={{equals this.gender 'Male' }}>Male</option>
+                </select>
+            </div>
+        </div>
+        <button id='editBtn' type='submit' {{on 'click' this.getObj}}>Save</button>
+    </div>
+    {{#if this.showPopUp}}
+    <PopUp @class='greenBox' @value='Saved Successfully!' />
+    {{/if}}
+</div>
+{{outlet}}

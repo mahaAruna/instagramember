@@ -1,0 +1,68 @@
+{{page-title "Messages"}}
+<div id='wholeMessageBox' {{on 'click' this.hideSearch}}>
+    <div id='messageUserContainer'>
+        <h2 id='username'>{{this.user.userName}}</h2>
+        <i class="far fa-edit editSearchUser" onclick={{this.changeToSearch}}></i>
+        <div id='activePersonBox'>
+            {{#each this.activeUsers as |activers|}}
+            {{#if (this.check activers.id)}}
+            <div class='msgViewProfile around-space' {{on 'click' (fn this.changePage 'instagram.messages.username'
+                activers.id)}}>
+                <img src={{this.getSrc activers.profileUrl}} class='activeUserProfile'>
+                <span class='activeUserName'>{{activers.userName}}</span>
+                {{!-- {{#if activers.isActive}} --}}
+                <div id='activeGreen'></div>
+                {{!-- {{/if}} --}}
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+        <div id='messageusersBox'>
+            {{#if this.chats}}
+            <p class='messageRequestHead'>
+                <span style="font-size: 18px;font-weight: 900;">Messages</span>
+                <span style="font-size: 15px;font-weight: 900;color: gray;">Requests</span>
+            </p>
+            {{#each this.chats as |chat|}}
+            <UserBox @userName={{chat.user.userName}} @src={{this.getSrc chat.user.profileUrl}} @bio={{this.getMessage
+                chat.Message}} @onClick={{this.changePage}} @path='instagram.messages.username' @param={{chat.user.id}}
+                @time={{this.getTime chat.lastseen}} />
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+    {{outlet}}
+</div>
+{{#if this.isSearch}}
+<div id='searchBack' {{on 'click' this.hideSearch}}>
+    <div id='searchUserBox'>
+        <p style="text-align: center;
+    font-size: 19px;
+    padding: 25px;
+    border-bottom: 1px solid lightgray;
+    width: 100%;">
+            <span>New Message</span>
+            <i class="fal fa-times-circle" style="color: #ffffff;"></i>
+        </p>
+        <div style="height: 50px;
+    border-bottom: 1px solid lightgray;
+    padding-left: 10px;
+    width: 100%;
+}">
+            <span style="font-weight: 600">To:</span>
+            <Input @type='text' @value={{this.searchValue}} class='searchInput' {{on 'input' this.callForSearch}} {{on 'focus' this.stopHide}}/>
+        </div>
+        <div id="messageSearchBody">
+            {{#if this.searchArray}}
+            {{#each this.searchArray as |user|}}
+            <UserBox @userName={{user.userName}} @bio={{user.name}} @onClick={{this.changePage}}
+                @path='instagram.messages.username' @param={{user.id}} @id='searchOneUserBox'
+                @classForProfile='searchUserProfile' @src = {{this.getSrc user.profileUrl}}/>
+            {{/each}}
+            {{/if}}
+        </div>
+        {{!-- <div id='chatBtn' {{on 'click' this.changePage 'instagram.mesages.username' }}>Chat</div> --}}
+    </div>
+
+</div>
+{{/if}}

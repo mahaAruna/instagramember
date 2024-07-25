@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Emberapp</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{content-for "head"}}
+
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/emberapp.css">
+  <script src="https://kit.fontawesome.com/21c7af82aa.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alumni+Sans&family=Baloo+2&family=Bayon&family=Bebas+Neue&family=Belanosima:wght@600&family=BenchNine:wght@300&family=Caprasimo&family=Chivo&family=Crushed&family=Epilogue:wght@700&family=Fjalla+One&family=Fraunces:opsz@9..144&family=Heebo&family=Hind+Vadodara:wght@300;400;500;600;700&family=Klee+One:wght@600&family=Lato:wght@100;700&family=Lora:wght@700&family=Montserrat:wght@300;500&family=Noto+Sans+JP:wght@500&family=Noto+Sans+TC:wght@500&family=Noto+Sans+Vithkuqi&family=Noto+Sans:wght@500&family=Nunito+Sans:opsz,wght@6..12,600&family=Play:wght@700&family=Roboto:wght@300;500&family=Rowdies:wght@300&family=Rubik+Mono+One&family=Rubik:wght@300&family=Source+Code+Pro:wght@300&family=Source+Sans+3:wght@200&family=Ubuntu&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&family=Vollkorn:wght@900&family=Work+Sans:wght@200&family=Young+Serif&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+  {{content-for "head-footer"}}
+</head>
+
+<body>
+  {{content-for "body"}}
+
+  <script src="{{rootURL}}assets/vendor.js"></script>
+  <script src="{{rootURL}}assets/emberapp.js"></script>
+
+  {{content-for "body-footer"}}
+</body>
+
+</html>

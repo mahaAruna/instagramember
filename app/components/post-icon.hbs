@@ -1,0 +1,35 @@
+<div class='reelIconText'>
+    <ul class={{if @class @class 'reelIconList' }}>
+        {{#if (this.getIsLike @post.likesCount true)}}
+        <li {{on 'click' (fn this.removeLike @post)}}><i class="fa-solid fa-heart cursor liked"></i>
+            {{#if @countShow}}
+            <p style='font-size: 18px'>{{@post.likesCount.length}}</p>
+            {{/if}}
+        </li>
+        {{else}}
+        <li {{on 'click' (fn this.addLike @post)}}><i class='fa-regular fa-heart cursor'></i>
+            {{#if @countShow}}
+            <p style='font-size: 18px'>{{@post.likesCount.length}}</p>
+            {{/if}}
+        </li>
+
+        {{/if}}
+        <li {{on 'click' (if @onClick this.showCurrentComment (fn this.changePage 'instagram.post' @post.id))}}><i
+                class="fa-regular fa-comment fa-flip-horizontal cursor"></i>
+            {{#if @countShow}}
+            <p style='font-size: 15px'>{{@post.commentsCount.length}}</p>
+            {{/if}}
+        </li>
+        <li style="font-size: 23px" {{on 'click' (fn this.setShowShareList @post.id)}}>
+
+            <i class='fa-solid fa-paper-plane cursor'></i>
+        </li>
+        <li>
+            {{#if (this.getIsSaved @post)}}
+            <i class={{@saveClass}} style="font-size: 24px;" {{on 'click' (fn this.removeSavedPost @post)}}></i>
+            {{else}}
+            <i class={{@unSaveClass}} style="font-size: 24px;" {{on 'click' (fn this.savePost @post)}}></i>
+            {{/if}}
+        </li>
+    </ul>
+</div>

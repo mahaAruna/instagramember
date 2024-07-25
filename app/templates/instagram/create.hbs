@@ -1,0 +1,113 @@
+{{page-title "Create"}}
+<div id='createBox'>
+    {{#if this.showInput}}
+    <div id='postInput'>
+        <span> CREATE
+            <input type="file" enctype='multipart/form-data' {{on 'change' this.getFile}}>
+        </span>
+    </div>
+    {{/if}}
+    {{#if this.showCrop}}
+    <div class='postCrop'>
+        <ul class='cropHead'>
+            <li {{on 'click' this.showDiscardBox}}><i class="fa-solid fa-arrow-left cursor"></i></li>
+            <li>Crop</li>
+            <li {{on 'click' this.changeToEdit}} class='cursor'>Next</li>
+        </ul>
+        <div class='imageCrop'>
+            {{#if this.isImage}}
+            <img src={{this.base64Image}} class='postCropImage'>
+            {{/if}}
+            {{#if this.isVideo}}
+            <video style='height: 100%; width: 100%' autoplay>
+                <source src={{this.base64Image}} type="video/mp4">
+            </video>
+            {{/if}}
+        </div>
+    </div>
+    {{/if}}
+    {{#if this.showEdit}}
+    <div class='postCrop editPost'>
+        <ul class='cropHead'>
+            <li {{on 'click' this.changeToCrop}}><i class="fa-solid fa-arrow-left cursor"></i></li>
+            <li>Edit</li>
+            <li {{on 'click' this.changeToCreate}} class = 'cursor'>Next</li>
+        </ul>
+        <div class='editImage'>
+            <div class='imageEdit'>
+                {{#if this.isImage}}
+                <img src={{this.base64Image}} class='postCropImage'>
+                {{/if}}
+                {{#if this.isVideo}}
+                <video style='height: 100%; width: 100%'>
+                    <source src={{this.base64Image}} type="video/mp4">
+                </video>
+                {{/if}}
+            </div>
+            <div class='filterBox'>
+
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if this.showCreate}}
+    <div class='postCrop editPost'>
+        <ul class='cropHead'>
+            <li {{on 'click' this.changeToEdit}}><i class="fa-solid fa-arrow-left cursor"></i></li>
+            <li>Create New Post</li>
+            <li {{on 'click' this.onShare}} class = 'cursor'>Share</li>
+        </ul>
+        <div class='editImage'>
+            <div class='imageEdit'>
+                {{#if this.isImage}}
+                <img src={{this.base64Image}} class='postCropImage'>
+                {{/if}}
+                {{#if this.isVideo}}
+                <video style='height: 100%; width: 100%'>
+                    <source src={{this.base64Image}} type="video/mp4">
+                </video>
+                {{/if}}
+            </div>
+            <div class='filterBox'>
+                <p class='userPostBox'>
+                    <img class='userPostProfile' src={{this.src}}>
+                    <span style="line-height: 3.5;
+  padding-left: 20px;">{{this.user.userName}}</span>
+                </p>
+                <div class='captionBox'>
+                    <Input @type="text" id='inputCaption' @value={{this.caption}} />
+                    <p class = 'captionEmoji'>
+                        <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 22px" {{on 'click'
+                                this.showEmoji}}></i>
+                        <span>0/2,200</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    {{#if this.showDiscard}}
+    <div id='unfollowBox'>
+        {{!-- <div class='black'></div>
+        --}}
+
+        <p>Discard Post</p>
+        <p>If you leave, your edits won't be saved.</p>
+        <div id='buttonDiv'>
+            <button class='butClasred' type="button" {{on 'click' this.discard}}>Discard</button>
+            {{!-- <button class='butClas' onClick={{this.}} type="button"> Cancel</button> --}}
+        </div>
+    </div>
+    {{/if}}
+
+
+    {{#if this.isShowEmoji}}
+    <div id='captionemojiContainer'>
+        {{#each this.emojis as |emoji|}}
+        <span class='emojiChar' {{on 'click' (fn this.setText emoji.character)}}>{{emoji.character}}</span>
+        {{/each}}
+    </div>
+    {{/if}}
+</div>
+{{outlet}}

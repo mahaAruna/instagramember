@@ -1,0 +1,35 @@
+{{page-title "Followings"}}
+<div id='searchBack' {{on 'click' this.hide }}>
+
+    <div class='boxFor'>
+        <h2 style="padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    font-size: 18px;">Followings</h2>
+        <Input @type='text' placeholder="Search" class='searchBoxFor' />
+        {{#if this.followings}}
+
+        {{#each this.followings as |follow|}}
+        <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' follow.id follow)}}>
+            <div id='profileCircle'>
+               <img src={{this.getImage follow.profileUrl}} style = "    height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='removeBtn' type="button" {{on 'click' (fn this.showBox follow)}}>
+                    {{this.isConfirm}}
+                </button>
+                <p id='textStyle'>{{follow.userName}} {{@content}}</p>
+
+                <p class='bioText'>{{follow.bio}}</p>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+    {{#if this.showUnFollow}}
+    <UnFollowBox @value={{this.setUnFollow}} @onUnFollow={{this.unFollow}}/>
+    {{/if}}
+</div>
+{{outlet}}

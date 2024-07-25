@@ -1,0 +1,17 @@
+{{page-title "Explore"}}
+<div id = 'exploreSection'>
+    {{!-- <div id = 'wholeExplore'> --}}
+        {{#each this.posts as |post|}}
+            <div class = 'gridPostBox cursor' {{on 'click' (fn this.changetoPost post.id)}}>
+                    {{#if (equals (file-type post.imageUrl) 'image')}}
+                    <img src={{this.getSrc post.imageUrl}} style = "height: 400px;
+    width: 348px;">
+                    {{else if (equals (file-type post.imageUrl) 'video')}}
+                    <video style = 'width: 100%;'>
+                        <source src="{{this.getSrc post.imageUrl}}" type = 'video/mp4'>
+                    </video>
+                    {{/if}}
+            </div>
+        {{/each}}
+</div>
+{{outlet}}

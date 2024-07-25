@@ -1,0 +1,22 @@
+{{page-title "Post"}}
+<div class = "profilePostBox">
+    {{#each this.postList as |post|}}
+        <div class = "onePostBox" {{on 'click' (fn this.changeToPost post.id)}}>
+            {{#if (equals (file-type post.imageUrl) 'image')}}
+               <img src={{this.getSrc post.imageUrl}} class='onePostImage'>
+            {{else if (equals (file-type post.imageUrl) 'video')}}
+                <video style="height:100%; width: 100%">
+                    <source src="{{this.getSrc post.imageUrl}}" class="postImagePosx" type = 'video/mp4'>
+                </video>
+            {{/if}}
+            
+            <div class = "hoverScreen">
+                <ul class='reelIconList'>
+                    <li><i class='fa-regular fa-heart menu-icon' style = "width: 30px"></i>{{post.likesCount.length}}</li>
+                    <li><i class="fa-regular fa-comment fa-flip-horizontal" style="color: #ffffff; width: 30px"></i></li>
+                </ul>
+            </div>
+        </div>
+    {{/each}}
+</div>
+{{outlet}}

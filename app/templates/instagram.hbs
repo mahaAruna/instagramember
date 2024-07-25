@@ -1,0 +1,86 @@
+{{page-title "Instagram"}}
+<div id='wholeContainer'>
+    <div id='side-bar'>
+        {{#if this.isSmall}}
+        <div id='logo'>
+            Instagram
+        </div>
+        {{else}}
+        <i class="fa-brands fa-instagram" style="color: #080808;font-size: 35px;padding-left: 22px;height:109px; display:flex; align-items:center"></i>
+        {{/if}}
+
+        <div id='menuContainer'>
+            {{#each @model as |menu|}}
+            {{!-- {{}} --}}
+            <MenuBar @class={{menu.class}} @text={{menu.text}} @onClick={{this.changePage}} @path={{menu.path}}
+                @param={{menu.id}} @isCurrentPath = {{this.getColor menu.path}} @isshow = {{this.isSmall}}/>
+            {{/each}}
+        </div>
+        <div id='bottom-side-bar'></div>
+        {{#if this.isSearch}}
+        <div id='searchBoxContainer'>
+            <div id='searchHeader'>
+                <h2 id='searchHead'>Search</h2>
+                <Input id='inputSearch' @type='text' @value={{this.searchValue}} oninput={{this.callForSearch}} placeholder="Search"/>
+                <i class="fas fa-times-circle inputcloseIcon cursor" style="color: #828282;" {{on 'click' this.closeSearch}}></i>
+            </div>
+
+            <div id='searchBody'>
+                <p class = 'searchRecentText'>
+                    <span>Recent</span>
+                    <span style = 'color: #1d85fc; font-size: 14px'>Clear All</span>
+                </p>
+                {{#if this.search}}
+
+                    {{#each this.search as |user|}}
+                    <UserBox @userName={{user.userName}} @bio={{user.name}} @onClick={{this.changePage}}
+                        @path='instagram.profile' @param={{user.id}} @src = {{this.getSrc user.profileUrl}}/>
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+        {{#if this.isNotification}}
+
+        <div id='searchBoxContainer'>
+            <div id='searchHeader'>
+                <h2 id='searchHead'>Notifications</h2>
+            </div>
+            <div id='searchBody'>
+                {{#if this.notification}}
+                {{#each this.notification as |notify|}}
+                {{#if (this.getIsNotify notify.type)}}
+                    <UserBox @userName={{notify.user.userName}} @content={{which-content notify.content}} @commentText = {{this.getCommentText notify}}
+                        @onClick={{this.getPage notify.type notify.user.id notify.post}} @path='instagram.profile' @param={{notify.user.userName}}
+                        @buttonClass='showButton' @value={{if (this.getValue notify.content) (fn this.getNotificationContent notify.content)}} @onButton={{fn this.sendConfirmationRequest
+                        notify.user.id }} @src = {{this.getSrc notify.user.profileUrl}} @postSrc = {{this.getSrc notify.postImage}} @wrongButton = {{true}}/>
+                {{/if}}
+                {{/each}}
+
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    <div id='layout-container' onclick={{this.hide}}>
+        {{!-- {{#if this.home}} --}}
+        {{outlet}}
+    </div>
+
+    {{#if this.isShowNotification}}
+    {{!-- {{#if this.LikeNotify}}
+        <div id = 'notifyBox'>
+            <span ></span>
+        </div>
+    {{/if}} --}}
+    {{#if this.messageNotify}}
+        <div id = 'notifyBox' {{on 'click' (fn this.changeNotify 'instagram.messages.username' this.notify.Message.user.id)}} >
+            <span>{{this.notify.Message.user.userName}}</span>
+            <span>{{this.messageContent.messageText}}</span>
+        </div>
+    {{else}}
+        <NotifyBox id='notifyBox' @onClick={{this.changeNotify}} @type = {{this.notify.type}} @content = {{this.notify.content}} @username = {{this.notify.user.userName}} @src = {{this.getSrc this.notify.user.profileUrl}} @messageText = {{this.messageText}} @path ='instagram.messages.username' @param = {{this.notify.user.id}}/>
+    {{/if}}
+    {{/if}}
+
+</div>

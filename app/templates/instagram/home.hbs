@@ -1,0 +1,182 @@
+{{page-title "Home"}}
+<div class='homeContainer'>
+    <div class='mainContainer'>
+        <div class="storyContainer"></div>
+        <div class="reelsContainer">
+            {{#if this.newPost}}
+            <div {{did-insert this.setupIntersectionObserver}} class="postBox">
+                <p class="postHead">
+                    <img class="reelProfileBox" src={{this.getSrc this.postUserName.profileUrl}} alt=''>
+                    <span>{{this.postUserName.userName}}</span>
+                    <span>{{(fn this.getTime this.postUserName.postedDate)}}</span>
+                    <span>{{(fn this.getFollow this.postUserName.id)}}</span>
+                </p>
+                <div class="postImageDiv">
+                    {{#if (equals (file-type this.newPost.imageUrl) 'image')}}
+                    <img src="{{this.getPost this.newPost.imageUrl}}" class="postImageBox" alt=''>
+                    {{else if (equals (file-type this.newPost.imageUrl) 'video')}}
+                    <video class='height'>
+                        <track kind='captions'>
+                        <source src="{{this.getPost this.newPost.imageUrl}}" class="postImagePosx">
+                    </video>
+                    {{/if}}
+                </div>
+                <p class='reelIconText'>
+                <ul class='reelIconList'>
+                    <li><i class='fa-regular fa-heart menu-icon cursor'></i></li>
+                    <li><i class="fa-regular fa-comment fa-flip-horizontal cursor"></i></li>
+                    <li></li>
+                </ul>
+                <i class="fa-regular fa-bookmark bookmark"></i>
+                </p>
+                <p class='likesCount'>360 likes</p>
+                <p class='commentsCount'>View all 5 comments</p>
+                <div class='commentBox'>
+                    <Input @type="text" placeholder="Add a Comment" class='commentInput' aria-label="Label Text Here" />
+                    <i class="fa fa-smile-o smile" aria-hidden="true"></i>
+                </div>
+                {{!--
+            </div> --}}
+        </div>
+        {{/if}}
+        {{#if this.post}}
+        {{#each this.post as |post|}}
+        <div {{on 'mouseover' (fn this.over 'parent' )}} {{on 'mouseout' (fn this.stop 'parent' )}} class="postBox">
+            <p class="postHead">
+                <img class="reelProfileBox cursor" src={{this.check post.user.id 'profile' }} {{on 'click' (fn
+                    this.changePage 'instagram.profile' post.user.id)}}>
+                <span class="cursor" style="font-weight:600" {{on 'click' (fn this.changePage 'instagram.profile'
+                    post.user.id)}}>{{this.check post.user.id
+                    'userName'}}</span>
+                <span class="postTime"> •{{this.getTime post.postedDate}}•</span>
+                <span>{{this.getFollow post.user.id}}</span>
+                {{!-- <i class="settingsIconReel"><i class="fa-solid fa-ellipsis"></i></i> --}}
+            </p>
+            <div class="postImageDiv">
+                {{#if (equals (file-type post.imageUrl) 'image')}}
+                <img src="{{this.getPost post.imageUrl}}" class="postImageBox" alt=''>
+                {{else if (equals (file-type post.imageUrl) 'video')}}
+                <video class='video' id='video'>
+                    <track kind='captions' />
+                    <source src="{{this.getPost post.imageUrl}}" type='video/mp4'>
+                </video>
+                {{/if}}
+            </div>
+            <PostIcon @post = {{post}} @setShowShareList = {{this.setShowShareList}} @saveClass = 'fas fa-bookmark saveIcon' @unSaveClass = 'fa-regular fa-bookmark saveIcon'/>
+            <p class='likesCount cursor' {{on 'click' (fn this.getLikers post.id)}}>{{post.likesCount.length}}
+                likes
+            </p>
+            <p style="padding: 10px; font-size:16px;"><span class='cursor' style="font-weight:600" {{on 'click' (fn
+                    this.changePage 'instagram.profile' post.user.id)}}>{{this.check post.user.id
+                    'userName'}}</span>
+                {{post.caption}}</p>
+            <p class='commentsCount cursor' {{on 'click' (fn this.changePage 'instagram.post' post.id)}}> View
+                all
+                {{post.commentsCount.length}} comments</p>
+            {{#if this.showComment}}
+            {{#each this.commentList as |comment|}}
+            <div style="padding-left: 10px; line-height: 2;">
+                <span style="font-weight: 600" class='cursor' {{on 'click' (fn this.changePage 'instagram.profile'
+                    comment.user.id)}}>{{comment.user.userName}} </span>
+                <span>{{comment.commentText}}</span>
+                {{#if (this.getIsLike comment.likesCount true)}}
+                <i class="fa-solid fa-heart" style="position:absolute; font-size: 19px; left: 95%; color: #ff0000;"
+                    {{on 'click' (fn this.removeLikeComment comment)}}></i>
+                {{else}}
+                <i class='fa-regular fa-heart' style="position:absolute; font-size: 19px; left: 95%;" {{on 'click' (fn
+                    this.addLikeComment comment)}}></i>
+                {{/if}}
+            </div>
+
+            {{/each}}
+            {{/if}}
+            <div class='commentBox'>
+                <Input @type="text" placeholder="Add a Comment" class='commentInput' @enter={{(fn this.sendComment
+                    post.id)}} @value={{this.commentText}} />
+                <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 15px;"></i>
+            </div>
+        </div>
+        {{!--
+    </div> --}}
+    {{!-- {{this.setCount}} --}}
+    {{/each}}
+    {{/if}}
+</div>
+</div>
+<div class="suggestionContainer">
+
+</div>
+</div>
+
+{{#if this.isShowShareList}}
+<SharePage @noDisplay = {{this.noDisplay}} @head = 'Share' @callForSearch = {{this.callForSearch}} @focus = {{this.myfun}} @search = {{this.search}} @shareList = {{this.shareList}} @messageText = {{this.messageText}} @sendMessage = {{this.sendMessage}} @addShareList = {{this.addShareList}} @removeShareList = {{this.removeShareList}} @searchValue = {{this.searchValue}}/>
+{{!-- <div id='searchBack' {{on 'click' this.noDisplay}}>
+    <div class='boxFor'>
+        <h2 style="padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    font-size: 18px;">Share</h2>
+        <Input @type="text" placeholder="Search" tabindex="0" class="searchBoxFor" @value={{this.searchValue}}
+            {{on 'input' this.callForSearch}} {{on 'focus' this.myfun}} />
+
+        {{#if this.search}}
+        {{#each this.search as |user|}}
+        <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' user.id user)}}>
+            <div id='profileCircle'>
+                <img src={{this.getSrc user.profileUrl}} style="height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='shareRadioButton' type="button" {{on 'click' (fn this.addShareList user.id)}}>
+                    {{#if this.isSelected}}
+                    {{#if (this.getIsSelected user.id)}}
+                    <i class='fa-solid fa-circle-check checkIcon'></i>
+                    {{/if}}
+                    {{/if}}
+                </button>
+                <p id='textStyle'>{{user.userName}} {{@content}} {{#if (this.getIsFollow user)}}
+                    <span style="font-size: 14px;color: #0107ff;font-weight: 600;" {{on 'click' (fn
+                        this.sendConfirmationRequest user.id)}}>. {{this.getIsConfirm user.userName}}</span>
+                    {{/if}}
+                </p>
+
+                <p class='bioText'>{{user.name}}</p>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+        {{#if this.shareList}}
+        {{#each this.shareList as |share|}}
+        <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' share.user.id share)}}>
+            <div id='profileCircle'>
+                <img src={{this.getSrc share.user.profileUrl}} style="height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='shareRadioButton' type="button" {{on 'click' (fn this.addShareList share.user.id)}}>
+                    {{#if this.isSelected}}
+                    {{#if (this.getIsSelected share.user.id)}}
+                    <i class='fa-solid fa-circle-check checkIcon'></i>
+                    {{/if}}
+                    {{/if}}
+                </button>
+                <p id='textStyle'>{{share.user.userName}} {{@content}} {{#if (this.getIsFollow share.user)}}
+                    <span style="font-size: 14px;color: #0107ff;font-weight: 600;" {{on 'click' (fn
+                        this.sendConfirmationRequest share.user.id)}}>. {{this.getIsConfirm share.user.userName}}</span>
+                    {{/if}}
+                </p>
+                <p class='bioText'>{{share.user.bio}}</p>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+        <div class='shareBox'>
+            <Input @type='text' @value={{this.messageText}} class='shareMessage' {{on 'input' this.preventClose}} />
+            <button class='shareSendBtn' type="button" {{on 'click' this.sendMessage}}>Send</button>
+        </div>
+    </div>
+</div> --}}
+{{/if}}
+{{outlet}}

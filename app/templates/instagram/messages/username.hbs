@@ -1,0 +1,202 @@
+<div id='messageContainer' {{on 'click' this.hide}}>
+    <div id='messagehead'>
+        <div id='mesageUserProfile'>
+            <div id='userProfileMessage'>
+                <img src={{this.src}} class='msgProfile'>
+            </div>
+            <div class='messageHeadUser'>
+                <span style="font-weight: 600; font-size: 18px;">{{this.user.userName}}</span>
+                <span style="font-size: 14px;color: gray;">{{this.activeStatus}}</span>
+            </div>
+        </div>
+        <div id='iconContainer'>
+            <i class="fa-solid fa-circle-info" style="font-size: 30px"></i>
+        </div>
+    </div>
+    <div id='messageTextBox'>
+        <div id='messageBox'>
+            <div id='userAboutBox'>
+                <div id='messageProfile'>
+                    <img src={{this.src}} class='msgViewProfile'>
+                </div>
+                <p style="line-height: 2;font-size: 20px;font-weight: 600;">{{this.user.userName}}</p>
+                <p>Instagram</p>
+                <Button @class='viewBtn' @params={{this.user.id}} @path='instagram.profile'
+                    @onClick={{this.changeToProfile}}>View Profile</Button>
+            </div>
+            <div id={{'messagesDiv'}}>
+                {{#if this.modelMessage}}
+                {{log 'messageList ' this.messageArray}}
+                {{#each this.messageArray as |text|}}
+                {{log 'in message'}}
+                <div class={{if (this.getClass text.receiver) 'rightContent' 'leftContent' }} {{did-insert
+                    this.scrollDown}} {{on 'mouseover' (fn this.setIsReactEmoji text.id)}}>
+
+                    <div class={{if (this.getClass text.receiver) 'innerContent alignFlex' 'innerContent' }}>
+                        {{#if (this.isPost text)}}
+                        <div class='shareReelVideo' {{on 'click' (fn this.showReel text.id)}}>
+                            {{#if (this.fetchPostSrc text)}}
+                            {{#if this.getIsPost}}
+                            <div class='shareReelsHeader'>
+                                <img src={{this.getSrc text.post 'userImage' }} class='sharedReelUserProfile'>
+                                <span class='sharedReelUser'>{{this.getSrc text.post 'userName'}}</span>
+                            </div>
+                            <video style="height:100%; width: 100%">
+                                <source src="{{this.getSrc text.id 'post'}}" type='video/mp4'>
+                            </video>
+                            {{/if}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
+
+                        {{#if (this.getIsReply text.replyId)}}
+                        <span class='replyTextHead'>{{this.getReplyUser text.replyId text}}</span>
+                        <span class={{if (this.getClass
+                            text.receiver) 'borderChange extraMarginLeft' 'content replyBackGround'
+                            }}>{{this.getReplyText text.replyId}}</span>
+                        <span class={{if (this.getClass text.receiver) 'rightLine replyLine' 'replyLine leftLine'
+                            }}></span>
+                        {{/if}}
+
+                        {{#if (this.getIsNotEmpty text.messageText)}}
+                        {{#if (this.getClass text.receiver)}}
+                        <img src={{this.src}} class={{if (this.getReply
+                            text.replyId) 'replyImage extraTopImage' 'replyImage' }}>
+                        {{/if}}
+
+                        <span class={{if (this.getClass text.receiver) 'borderChange' 'content' }}>{{text.messageText}}
+                            {{#if (this.getIsReaction text)}}
+                            {{#if (this.isReactionChange)}}
+                            <span class={{(this.getReactionClass text)}}>{{this.getReaction text.reaction}}</span>
+                            {{else}}
+                            <span class={{(this.getReactionClass text)}} {{on 'click'
+                                this.showRemoveBox}}>{{this.getReaction text.reaction}}</span>
+                            {{/if}}
+                            {{/if}}</span>
+                        {{/if}}
+
+
+                    </div>
+                    {{#if (this.getIsReactEmoji text.id)}}
+                    <ul class='messageReplyList'>
+                        <li><i class="fa fa-smile-o" aria-hidden="true" style="font-size: 22px" {{on 'click' (fn
+                                this.showEmoji 'react' text.id)}}></i></li>
+                        <li><i class="fa-solid fa-reply" style="color: #363636;" {{on 'click' (fn this.replyMessage
+                                text)}}></i></li>
+                        <li><i class="fa-solid fa-ellipsis" style="color: black;"></i></li>
+                        <li>{{#if (this.getIsReactEmoji text.id)}}
+                            {{#if this.emojis}}
+                            <div class='emojiContainer emojiReactContainer'>
+                                {{#each this.emojis as |emoji|}}
+                                <span class='emojiChar' {{on 'click' (fn this.addReaction text.id
+                                    emoji.character)}}>{{emoji.character}}</span>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+                            {{/if}}
+                        </li>
+                    </ul>
+                    {{/if}}
+                </div>
+                {{/each}}
+                {{/if}}
+                {{#if this.showmessage}}
+                {{#each this.content as |text|}}
+                {{log 'in content'}}
+                <div class={{if text.reason 'leftContent' 'rightContent' }} {{did-insert this.scrollDown}}
+                    {{on 'mouseover' (fn this.setIsReactEmoji text.id)}}>
+                    <div class={{if text.reason 'innerContent' 'innerContent alignFlex' }}>
+                        {{#if (this.isPost text)}}
+
+                        <div class='shareReelVideo' {{on 'click' (fn this.showReel text.id)}}>
+                            {{#if (this.fetchPostSrc text)}}
+                            {{#if this.getIsPost}}
+                            <div class='shareReelsHeader'>
+                                <img src={{this.getSrc text.post 'userImage' }} class='sharedReelUserProfile'>
+                                <span class='sharedReelUser'>{{this.getSrc text.post 'userName'}}</span>
+                            </div>
+                            <video style="height:100%; width: 100%">
+                                <source src="{{this.getSrc text.id 'post'}}" type='video/mp4'>
+                            </video>
+                            {{/if}}
+                            {{/if}}
+                        </div>
+                        {{/if}}
+                        {{#if (this.getIsReply text.replyId)}}
+                        <span class='replyTextHead'>{{this.getReplyUser text.replyId text 'current'}}</span>
+                        <span class={{if (this.getClass
+                            text.user.id) 'borderChange extraMarginLeft' 'content replyBackGround'
+                            }}>{{this.getReplyText text.replyId}}</span>
+                        <span class={{if text.reason 'leftLine replyLine' 'replyLine rightLine' }}></span>
+                        {{/if}}
+                        {{#if (this.getIsNotEmpty text.messageText)}}
+                        {{#if text.reason}}
+                        {{else}}
+                        <img src={{this.src}} class={{if (this.getReply
+                            text.replyId) 'replyImage extraTopImage' 'replyImage' }}>
+                        {{/if}}
+                        <p class={{if text.reason 'content' 'borderChange' }}>{{if text.reason text.messageText
+                            text.messageText}}</p>
+                        {{/if}}
+                    </div>
+                    {{#if (this.getIsReactEmoji text.id)}}
+                    <ul class='messageReplyList'>
+                        <li><i class="fa fa-smile-o" aria-hidden="true" style="font-size: 22px" {{on 'click' (fn
+                                this.showEmoji 'react' text.id)}}></i></li>
+                        <li><i class="fa-solid fa-reply" style="color: #363636;" {{on 'click' (fn this.replyMessage
+                                text)}}></i></li>
+                        <li><i class="fa-solid fa-ellipsis" style="color: black;"></i></li>
+                    </ul>
+                    {{/if}}
+                </div>
+                {{/each}}
+
+                {{/if}}
+                {{#if this.showSeenTime}}
+                <span class='leftContent' style='padding-left: 55px;
+  font-size: 12px;'>{{this.getSeenTime}}</span>
+                {{/if}}
+            </div>
+        </div>
+        <div id='typeContainer'>
+            <div class='replyBox'>
+                {{#if this.isShowForwardBox}}
+                <p>Replying to <span style='font-weight: 900'>{{this.user.userName}}</span></p>
+                <span style='color: gray'>{{this.forReply}}</span>
+                <i class="fas fa-times cursor" {{on 'click' this.closeReply}}
+                    style="color: black;position: absolute;top: 19%;font-size: 19px;left: 98%;"></i>
+                {{/if}}
+            </div>
+            <div id='typeBox'>
+                <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 22px" {{on 'click' this.showEmoji}}></i>
+                <Input @type='text' class='inputBoxMessage' placeholder="Message" @value={{this.text}} {{on 'input'
+                    this.hideIcon}} @enter={{this.sendMessage}} />
+                {{#if this.iconshow}}
+                <i class="fa-regular fa-image" style="font-size: 24px;padding: 15px;"></i>
+                <i class="fa-regular fa-heart" style="font-size: 25px"></i>
+                {{/if}}
+                {{#if this.showSend}}
+                <span style="color: rgb(0, 68, 255); font-weight:600; padding-left: 35px; font-size: 17px"
+                    onclick={{this.sendMessage}}>Send</span>
+                {{/if}}
+            </div>
+        </div>
+        {{#if this.isShowEmoji}}
+        <div class='emojiContainer'>
+            {{#each this.emojis as |emoji|}}
+            <span class='emojiChar' {{on 'click' (fn this.setText emoji.character)}}>{{emoji.character}}</span>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</div>
+{{#if this.isShowReactionRemoveBox}}
+<div id='searchBack'>
+<div>
+    <div><span>Reactions</span><i></i></div>
+    {{!-- <UserBox @userName={{.user.userName}} @src={{this.getSrc chat.user.profileUrl}} @bio={{this.getMessage
+    chat.Message}} @onClick={{this.changePage}} @path='instagram.messages.username' @param={{chat.user.id}}
+    @time={{this.getTime chat.lastseen}} /> --}}
+</div>
+</div>
+{{/if}}

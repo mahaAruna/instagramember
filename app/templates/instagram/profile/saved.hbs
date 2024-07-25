@@ -1,0 +1,22 @@
+{{page-title "Sved"}}
+<div class = "profilePostBox">
+    {{#each this.savedList as |saved|}}
+        <div class = "onePostBox" {{on 'click' (fn this.changeToPost saved.id)}}>
+            {{#if (equals (file-type saved.imageUrl) 'image')}}
+               <img src={{this.getSrc saved.imageUrl}} class='onePostImage'>
+            {{else if (equals (file-type saved.imageUrl) 'video')}}
+                <video style="height:100%; width: 100%">
+                    <source src="{{this.getSrc saved.imageUrl}}" class="postImagePosx" type = 'video/mp4'>
+                </video>
+            {{/if}}
+            
+            <div class = "hoverScreen">
+                <ul class='reelIconList'>
+                    <li><i class='fa-regular fa-heart menu-icon' style = "width: 30px"></i>{{saved.likesCount.length}}</li>
+                    <li><i class="fa-regular fa-comment fa-flip-horizontal" style="color: #ffffff; width: 30px"></i></li>
+                </ul>
+            </div>
+        </div>
+    {{/each}}
+</div>
+{{outlet}}

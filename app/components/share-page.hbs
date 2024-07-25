@@ -1,0 +1,67 @@
+<div id='searchBack' {{on 'click' @noDisplay}}>
+    <div class='boxFor'>
+        <h2 style="padding: 12px;text-align: center;border-bottom: 1px solid lightgray;font-size: 18px;">{{@head}}</h2>
+        <Input @type="text" placeholder="Search" tabindex="0" class="searchBoxFor" @value={{@searchValue}} {{on 'input' @callForSearch}} {{on 'focus' @focus}} />
+        {{#if this.isSearch}}
+        {{#each @search as |user|}}
+        <UserBox @id = 'followBox' @onClick = {{this.changePage}} @path = 'instagram.profile' @param = {{user.id}} @src = {{this.getSrc user.profileUrl}}  @addShareList = {{@addShareList}} @removeShareList = {{@removeShareList}} @userId = {{user.id}} @userName = {{user.userName}} @bio = {{user.text}} @radio = {{true}} />
+        {{/each}}
+        {{/if}}
+        {{#if this.isShareList}}
+        {{#each @shareList as |share|}}
+            <UserBox @id = 'followBox' @onClick = {{this.changePage}} @path = 'instagram.profile' @param = {{share.user.id}} @src = {{this.getSrc share.user.profileUrl}}  @addShareList = {{@addShareList}} @removeShareList = {{@removeShareList}} @userId = {{share.user.id}} @userName = {{share.user.userName}} @bio = {{share.user.name}} @radio = {{true}} />
+        {{/each}}
+        {{/if}}
+        <div class='shareBox'>
+            <Input @type='text' @value={{this.messageText}} class='shareMessage' {{on 'input' @focus}} />
+            <button class='shareSendBtn' type="button" {{on 'click' @sendMessage}}>Send</button>
+        </div>
+    </div>
+</div>
+
+        {{!-- <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' user.id user)}}>
+            <div id='profileCircle'>
+                <img src={{this.getSrc user.profileUrl}} style="height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='shareRadioButton' type="button" {{on 'click' (fn this.addShareList user.id)}}>
+                    {{#if this.isSelected}}
+                    {{#if (this.getIsSelected user.id)}}
+                    <i class='fa-solid fa-circle-check checkIcon'></i>
+                    {{/if}}
+                    {{/if}}
+                </button>
+                <p id='textStyle'>{{user.userName}} {{@content}} {{#if (this.getIsFollow user)}}
+                    <span style="font-size: 14px;color: #0107ff;font-weight: 600;" {{on 'click' (fn
+                        this.sendConfirmationRequest user.id)}}>. {{this.getIsConfirm user.userName}}</span>
+                    {{/if}}
+                </p>
+
+                <p class='bioText'>{{user.name}}</p>
+            </div>
+        </div> --}}
+
+        {{!-- <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' share.user.id share)}}>
+            <div id='profileCircle'>
+                <img src={{this.getSrc share.user.profileUrl}} style="height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='shareRadioButton' type="button" {{on 'click' (fn this.addShareList share.user.id)}}>
+                    {{#if this.isSelected}}
+                    {{#if (this.getIsSelected share.user.id)}}
+                    <i class='fa-solid fa-circle-check checkIcon'></i>
+                    {{/if}}
+                    {{/if}}
+                </button>
+                <p id='textStyle'>{{share.user.userName}} {{@content}} {{#if (this.getIsFollow share.user)}}
+                    <span style="font-size: 14px;color: #0107ff;font-weight: 600;" {{on 'click' (fn
+                        this.sendConfirmationRequest share.user.id)}}>. {{this.getIsConfirm share.user.userName}}</span>
+                    {{/if}}
+                </p>
+                <p class='bioText'>{{share.user.bio}}</p>
+            </div>
+        </div> --}}

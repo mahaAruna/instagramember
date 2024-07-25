@@ -1,0 +1,40 @@
+{{page-title "Followers"}}
+<div id='searchBack' {{on 'click' this.hide }}>
+
+    <div class='boxFor'>
+        <h2 style="padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    font-size: 18px;">Followers</h2>
+        <Input @type='text' placeholder="Search" class='searchBoxFor' />
+        {{#if this.followers}}
+
+        {{#each this.followers as |follow|}}
+        <div id='followBox' {{on 'click' (fn this.changePage 'instagram.profile' follow.id follow)}}>
+            <div id='profileCircle'>
+                <img src={{this.getImage follow.profileUrl}} style = "    height: 100%;
+    width: 100%;
+    border-radius: 50px;">
+            </div>
+            <div id='userTextSearch'>
+                <button class='removeBtn' type="button" {{on 'click' (fn this.removeFollower follow.id )}}>
+                    Remove
+                </button>
+                <p id='textStyle'>{{follow.userName}} {{@content}} {{#if  (this.getIsFollow follow)}}
+                    <span style = "font-size: 14px;color: #0107ff;font-weight: 600;" {{on 'click' (fn this.sendConfirmationRequest follow.id)}}>.  {{this.getIsConfirm follow.userName}}</span>
+                    {{/if}}
+                </p>
+
+                <p class='bioText'>{{follow.bio}}</p>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+</div>
+{{outlet}}
+
+{{!--
+<UserBox @userName={{follow.userName}} @bio={{follow.bio}} @onClick={{this.changePage}} @path='instagram.profile'
+    @buttonClass='removeBtn' @param={{follow.id}} @id='followBox' @pId='textStyle' @bioClass='bioText' @value='Remove'
+    @src={{follow.profileUrl}} /> --}}

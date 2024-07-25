@@ -1,0 +1,29 @@
+{{page-title "Signup"}}
+<div class='signInContainer'>
+  <div class="formContainer  increaseSize">
+
+    {{#if this.base64Image}}
+    <div class = 'inputProfile'>
+      <img src={{this.base64Image}} class='inputProfileImage'>
+    </div>
+    {{else}}
+    <i class="fas fa-user-circle" style="color:#adadad; font-size: 102px; position: relative">
+      <input type="file" enctype='multipart/form-data' class='profileIcon' onchange={{this.getFile}} require='required'>
+    </i>
+    {{/if}}
+
+    {{#if this.selectedFile}}
+    <img src={{selectedFile}} alt="Selected Image" class="selected-image">
+    {{/if}}
+    {{!-- <Input @type='file' class='profile' @onChange={{this.getFile}} /> --}}
+    <Form @arr={{@model}} @getObj={{this.getObj}} @buttonvalue='Sign Up' @class='form' @signup='true' />
+    <div class='spanDiv extraTop'>
+      <span>Already, Have An Account</span>
+      <LinkTo @route='instagram.signin' class='linkToText'>Sign In</LinkTo>
+    </div>
+    {{#if this.showPopUp}}
+    <PopUp @value={{this.result}} @class={{this.className}} />
+    {{/if}}
+  </div>
+</div>
+{{outlet}}

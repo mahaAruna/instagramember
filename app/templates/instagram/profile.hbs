@@ -1,0 +1,60 @@
+{{page-title "Profile"}}
+<div id='profileContainer'>
+    <div id='user-details'>
+        <div id='profile' class = {{this.classActive}}>
+            <img src = {{this.src}} class = 'profileImage cursor'>
+        </div>
+        <div id='bioContainer'>
+            <ul id='profileUserNameBox'>
+                <li style = "font-size: 22px;" class = 'cursor'>{{this.user.userName}}</li>
+                {{#if this.isMyProfile}}
+                <li class='buttonLi cursor' {{on 'click' (fn this.changePage 'instagram.account.edit')}}>Edit Profile</li>
+                <li class='buttonLi cursor' style = "margin-left: 10px">View Archive</li>
+                {{else}}
+                <li class='buttonLi cursor' {{on 'click' (fn this.sendConfirmationRequest this.user.id)}}>
+                    {{this.isConfirm}}
+                    {{!-- {{#if this.isaccountPrivate}} --}}
+                    {{!-- Requested --}}
+                    {{!-- {{else if this.isConfirm}} --}}
+                    {{!-- Follow Back --}}
+                    {{!-- {{else if this.isConfirm}} --}}
+                    {{!-- Confirm
+                    {{else if this.isFollowBack }}
+                    Follow Back
+                    {{else}}
+                    {{if this.isFollowing 'Following' 'Follow'}}
+                    {{/if}} --}}
+                </li>
+                <li class='buttonLi' {{on 'click' (fn this.changeToMessage this.user.id)}}>Message</li>
+                {{/if}}
+                <i></i>
+            </ul>
+            <ul id='userPostInfo'>
+                <li class='profileInfoText cursor' {{on 'click' (fn this.changePage 'instagram.profile.post')}}>{{this.postCount}} posts</li>
+                <li class='profileInfoText cursor'  {{on 'click' (fn this.changePage 'instagram.profile.followers')}}>{{this.followerCount}} followers</li>
+                <li class='profileInfoText cursor' {{on 'click' (fn this.changePage 'instagram.profile.followings')}}>{{this.followingCount}} following</li>
+            </ul>
+            <div id='bio-box'>
+                <p style = 'font-size: 20px;
+    font-weight: 900;
+    line-height: 2;'>{{this.user.name}}</p>
+                {{this.user.bio}}
+            </div>
+        </div>
+    </div>
+    <div id='high-light-box'>
+    </div>
+    <ul id='categories-box'>
+        <li class='categoryLi cursor' {{on 'click' (fn this.changePage 'instagram.profile.post')}}>POSTS</li>
+        <li class='categoryLi cursor' {{on 'click' (fn this.changePage 'instagram.profile.saved')}}>SAVED</li>
+        <li class='categoryLi cursor'>TAGGED</li>
+    </ul>
+    {{#if this.showUnFollow}}
+    <UnFollowBox @value={{this.setUnFollow}} @onUnFollow={{this.onUnFollow}} />
+    {{/if}}
+</div>
+<div class = "childBox">
+    <div class = "innerChild">
+{{outlet}}
+</div>
+</div>

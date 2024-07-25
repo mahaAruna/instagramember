@@ -1,0 +1,5 @@
+<select class="inputBox" {{on 'change' this.change}}>
+    {{#each @options as |optionName|}}
+    <option>{{optionName}}</option>
+    {{/each}}
+</select>

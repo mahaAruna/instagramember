@@ -1,0 +1,101 @@
+{{page-title "Reels"}}
+<div id='reelsSection'>
+    {{#each this.reels as |post|}}
+    <div class='ReelBigBox' {{on 'mouseover' (fn this.over 'parent' )}} {{on 'mouseout' (fn this.stop 'parent' )}} {{on 'click' this.hideComment}}>
+        <div class='oneReelBox' {{on 'mouseover' (fn this.over 'child' )}} {{on 'mouseout' (fn this.stop 'child' )}}>
+            <div class='reelVideoBox'>
+                <video class='reelVideo' id={{this.getId}}>
+                    <source src={{this.getSrc post.imageUrl}} type='video/mp4'>
+                </video>
+                <div class='reelsUserBox'>
+                    <ul class='reelsUserDetails'>
+                        <li><img src={{this.check post.user.id 'profile' }} style='height: 36px;width: 36px;
+    border-radius: 50%;'></li>
+                        <li>{{this.check post.user.id 'userName'}}</li>
+                        <li class='reelsFollowButton'>follow</li>
+                    </ul>
+                    <p style='color: white;
+    padding-left: 10px;
+    overflow: hidden;'>{{post.caption}}</p>
+                </div>
+            </div>
+
+            <div class='iconsReelBox'>
+                <PostIcon @post={{post}} @setShowShareList={{this.setShowShareList}}
+                    @saveClass='fas fa-bookmark saveIcon saveIconFlex' @unSaveClass='fa-regular fa-bookmark saveIcon saveIconFlex'
+                    @class='reelIconList flexIcon' @onClick = {{this.setComment}} @postId = {{post.id}} @countShow = {{true}}/>
+
+            </div>
+            {{!-- {{this.hideComment}} --}}
+            {{#if (this.getIsCurrentComment post.id)}}
+            {{this.callForComments post.id}}
+            {{#if this.getIsShow}}
+            {{#if this.comments}}
+            <CommentPage @mainClass='reelsCommentBox' @commentListClass='commentListBox' @userProfileUrl={{this.getSrc
+                this.user.profileUrl}} @userName={{this.user.userName}} @caption={{this.post.caption}} @comments={{this.comments}}
+                @getProfileId={{this.getProfileId}} @getCommentUserProfile={{this.getCommentUserProfile}} @getTime={{this.getTime}}
+                @removeLike={{this.removeLikeComment}} @addLike={{this.addLikeComment}} @getIsLike={{this.getIsLike}} @post={{this.post}}
+                @setShowShareList={{this.setShowShareList}} @sendComment = {{this.sendComment post}} @commentText = {{this.commentText}}/>
+            {{/if}}
+            {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{#if this.isShowShareList}}
+<SharePage @noDisplay = {{this.noDisplay}} @head = 'Share' @callForSearch = {{this.callForSearch}} @focus = {{this.myfun}} @search = {{this.search}} @shareList = {{this.shareList}} @messageText = {{this.messageText}} @sendMessage = {{this.sendMessage}} @addShareList = {{this.addShareList}} @removeShareList = {{this.removeShareList}} @searchValue = {{this.searchValue}}/>
+{{/if}}
+{{outlet}}
+
+
+
+
+{{!-- <div id='reelsCommentBox'>
+
+    <p class='commentBoxHead'><i></i><span>Comment</span></p>
+    <div class='commentListBox'>
+        {{#each this.comments as |comment|}}
+        <CommentBox @path='instagram.profile' @profileId={{this.getProfileId comment}} @src={{this.getCommentUserProfile
+            comment.user.id 'profile' }} @classForImage={{"postUserImage"}} @userName={{this.getCommentUserProfile
+            comment.user.id 'userName' }} @commentText={{comment.commentText}} @time={{this.getTime
+            comment.commentedDate}} @likesCount={{comment.likesCount.length}} @onRemove={{this.removeLikeComment}}
+            @onAdd={{this.addLikeComment}} @comment={{comment}} @getIsLike={{this.getIsLike}} />
+        {{/each}}
+    </div>
+    <div class='reelsCommentInput'>
+        <div class='innerInput'>
+            <img src={{this.check post.user.id 'profile' }} style='height: 30px;
+    border-radius: 50px;
+    width: 30px;
+    border: 1px solid lightgray;'>
+            <Input @type='text' placeholder='Add a comment... ' class='reelscommentinputBox' @value={{this.commentText}}
+                @enter={{this.sendComment post}} />
+            <i class="fa fa-smile-o" aria-hidden="true" style="font-size: 20px;"></i>
+        </div>
+    </div>
+</div> --}}
+
+
+{{!-- <ul class='onereelIconList'>
+    {{#if (this.getIsLike post.likesCount true)}}
+    <li class='reelsIcon' {{on 'click' (fn this.removeLike post)}}><i class="fa-solid fa-heart cursor"
+            style="color: #ff0000;"></i><span style='font-size: 14px'>{{post.likesCount.length}}
+        </span></li>
+
+    {{else}}
+    <li class='reelsIcon' {{on 'click' (fn this.addLike post)}}>
+        <i class='fa-regular fa-heart cursor'></i>
+        <span style='font-size: 14px'>{{post.likesCount.length}}</span>
+    </li>
+    {{/if}}
+    <li class='reelsIcon' {{on 'click' (fn this.isshowComment post.id)}}><i
+            class="fa-regular fa-comment fa-flip-horizontal cursor"></i><span
+            style='font-size: 14px'>{{post.commentsCount.length}}</span></li>
+    <li class='reelsIcon' style="font-size: 23px">
+        <i class='fa-solid fa-paper-plane cursor'></i>
+    </li>
+    <li class='reelsIcon'> <i class="fa-regular fa-bookmark" style="font-size: 24px;"></i></li>
+    <li class='reelsIcon'><i class="fa-solid fa-ellipsis" style="color: black;"></i></li>
+</ul> --}}

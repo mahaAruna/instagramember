@@ -1,0 +1,13 @@
+<div class="inputContainer">
+    <Label>{{@label}}</Label>
+    {{#if (equals @inputtype 'select')}}
+    <Select @options={{@options}} @onClick={{this.validatename}} />
+    {{else}}
+    <Input class="inputBox" @type={{if this.inputType this.inputType @inputtype}} placeholder={{@placeholder}} {{on 'input' this.validatename}}
+        @value={{@value}} required={{@required}} name={{@name}} {{input}} {{!-- @value={{this.checkvalues}} --}} />
+        
+        {{#if @iclass}}
+        <i class = {{if this.className this.className @iclass}} {{on 'click' this.showPassword}}></i>
+        {{/if}}
+    {{/if}}
+</div>

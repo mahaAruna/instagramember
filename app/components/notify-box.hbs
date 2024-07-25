@@ -1,0 +1,22 @@
+<div id='notifyBox' onclick={{this.changePage}}>
+    <img src={{@src}} class='notifyImage'>
+    {{#if (equals @type "FOLLOW")}}
+    {{#if (equals @content "Confirm")}}
+    {{@username}} requested to follow you.
+    {{/if}}
+    {{/if}}
+    {{#if (equals @type "MESSAGE")}}
+    {{@username}} {{@messageText}}
+    {{/if}}
+    {{#if (equals @type "LIKE")}}
+    {{#if (equals @content "comment")}}
+    {{@username}} liked your comment
+    {{/if}}
+    {{#if (equals @content "post")}}
+    {{@username}} liked your post
+    {{/if}}
+    {{/if}}
+    {{#if (equals @type 'COMMENT')}}
+    {{@username}} commented on your post
+    {{/if}}
+</div>

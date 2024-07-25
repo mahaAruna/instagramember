@@ -1,0 +1,8 @@
+<form class={{@class}} {{on 'submit' this.getObj}}>
+    {{#each @arr as |value|}}
+    <FormField @label={{value.labelName}} @inputtype={{value.type}} @onClick={{this.handlevalues}}
+        @required={{value.require}} @options={{value.options}} @placeholder={{value.placeholder}} {{!--
+        @value={{this.obj.value.labelName}} --}} @name={{value.name}} @class = {{value.class}} @iclass={{value.iclass}}/>
+    {{/each}}
+    <Button @class='signInbutton'>{{@buttonvalue}}</Button>
+</form>

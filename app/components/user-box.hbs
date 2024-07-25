@@ -1,0 +1,33 @@
+<div id={{if @id @id 'userBox' }} {{on 'click' this.changePage}}>
+    <div id={{if @classForProfile @classForProfile 'profileCircle' }}>
+        <img src={{@src}} class='userBoxImage'>
+    </div>
+    <div id='userTextSearch'>
+        {{#if @radio}}
+        <button class='shareRadioButton' type="button" {{on 'click' this.addShareList}}>
+            {{#if this.isSelected}}
+            <i class='fa-solid fa-circle-check checkIcon ' {{on 'click' this.removeShareList}}></i>
+            {{/if}}
+        </button>
+        {{/if}}
+        <p id={{@pId}} class="Pimage">{{@userName}}
+            {{@content}} {{@commentText}}
+            {{#if @value}}
+            <span class={{if @buttonClass @buttonClass 'hide' }} type="button" {{on 'click' this.onButton}}>
+                {{@value}}
+            </span>
+            {{/if}}
+            {{#if @postSrc}}
+            <img src={{@postSrc}} class='notifyPostImage'>
+            {{/if}}
+
+        </p>
+        <p class={{@bioClass}} style='font-size: 12px;color: #7a7a7a;padding-top: 8px;width: 130px;overflow: hidden;'>
+            {{@bio}}</p>
+        {{#if @wrongButton}}
+        <i class="fas fa-times cursor"
+            style="    position: absolute;left: 88%;top: 30%;color: gray;font-size: 27px;"></i>
+        {{/if}}
+
+    </div>
+</div>

@@ -1,0 +1,62 @@
+{{page-title "Post"}}
+<div class='postContainer'>
+    {{#if this.show}}
+        <i class="fas fa-chevron-circle-right rightHandle" {{on 'click' this.changeNext}}></i>
+    {{/if}}
+    <div class='postDetails'>
+        <i class="fas fa-times cursor" {{on 'click' this.changeToHome}}
+            style="color: #ffffff;position: absolute; font-size: 32px;left: 98%;top: 1%;"></i>
+        <div class='postPart postPartWidth'>
+                    {{#if (equals (file-type this.post.imageUrl) 'image')}}
+                    <img src="{{this.getSrc this.post.imageUrl}}" class="postImageBox">
+                    {{else if (equals (file-type this.post.imageUrl) 'video')}}
+                    <video autoplay class = 'video' style = 'height: 100%'>
+                        <source src="{{this.getSrc this.post.imageUrl}}" type = 'video/mp4'>
+                    </video>
+                    {{/if}}
+        </div>
+        <CommentPage @isShowUserBox = {{true}} @userProfileUrl = {{this.getSrc this.user.profileUrl}} @userName = {{this.user.userName}} @caption = {{this.post.caption}} @comments = {{this.comments}} @getProfileId = {{this.getProfileId}} @getCommentUserProfile = {{this.getCommentUserProfile}} @getTime = {{this.getTime}} @removeLike = {{this.removeLike}} @addLike = {{this.addLike}} @getIsLike = {{this.getIsLike}} @post = {{this.post}} @setShowShareList = {{this.setShowShareList}}  @sendComment = {{this.sendComment}} @commentText = {{this.commentText}}/>
+        {{!-- <div class='postPart'>
+            <div class='postUserBox'>
+                <img src={{this.getSrc this.user.profileUrl}} class='postUserImage'> 
+                <span>{{this.user.userName}}</span>
+                <i class="fa-solid fa-ellipsis postIcon" style="color: #ffffff;"></i>
+            </div>
+            <div class='postUserBox'>
+                <img src={{this.getSrc this.user.profileUrl}} class='postUserImage'>
+                <p>
+                    <span>{{this.user.userName}}</span>
+                    <span>{{this.post.caption}}</span>
+                </p>
+            </div>
+            <div class='commentContainer'>
+                {{#each this.comments as |comment|}}
+                <CommentBox @path='instagram.profile' @profileId={{this.getProfileId comment}}
+                    @src={{this.getCommentUserProfile comment.user.id 'profile' }} @classForImage={{"postUserImage"}}
+                    @userName={{this.getCommentUserProfile comment.user.id 'userName'}}
+                    @commentText={{comment.commentText}} @time={{this.getTime comment.commentedDate}}
+                    @likesCount={{comment.likesCount.length}} @onRemove={{this.removeLike}} @onAdd={{this.addLike}}
+                    @comment={{comment}} @getIsLike={{this.getIsLike}} />
+                {{/each}}
+            </div>
+            <div class='likesContainterPost'>
+                <PostIcon @post = {{this.post}} @setShowShareList = {{this.setShowShareList}} @saveClass = 'fas fa-bookmark saveIcon' @unSaveClass = 'fa-regular fa-bookmark saveIcon'/>
+                <span style="padding-left: 5px;
+    line-height: 3;
+    font-weight: 900;">{{this.post.likesCount.length}} likes</span>
+                <span></span>
+            </div>
+            <div class='commentTypeBox'>
+                <img src={{this.getSrc this.user.profileUrl}} class='commentUser'>
+                <Input @type='text' class='commentTextPost' placeholder="Add a Comment" @value={{this.commentText}}
+                    @enter={{this.sendComment}} />
+                <i class="fa fa-smile-o" aria-hidden="true" style="olor: white;
+    font-size: 22px;"></i>
+            </div>
+        </div> --}}
+    </div>
+</div>
+{{#if this.isShowShareList}}
+<SharePage @noDisplay = {{this.noDisplay}} @head = 'Share' @callForSearch = {{this.callForSearch}} @focus = {{this.myfun}} @search = {{this.search}} @shareList = {{this.shareList}} @messageText = {{this.messageText}} @sendMessage = {{this.sendMessage}} @addShareList = {{this.addShareList}} @removeShareList = {{this.removeShareList}} @searchValue = {{this.searchValue}}/>
+{{/if}}
+{{outlet}}
